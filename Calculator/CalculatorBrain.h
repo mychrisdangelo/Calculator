@@ -14,4 +14,7 @@
 - (double)performOperation:(NSString *)operation;
 - (void)makeEmpty;
 
++ (NSString *)descriptionOfProgram:(id)program;
++ (double)runProgram:(id)program;
+
 @end

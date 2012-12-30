@@ -10,41 +10,55 @@
 
 // private functions exclusive to implementation file
 @interface CalculatorBrain()
-@property (nonatomic, strong) NSMutableArray *operandStack;
+@property (nonatomic, strong) NSMutableArray *programStack;
+
 @end
 
 @implementation CalculatorBrain
 
-@synthesize operandStack = _operandStack;
+@synthesize programStack = _programStack;
 
-- (NSMutableArray *)operandStack
+- (NSMutableArray *)programStack
 {
     // empty NSMutableArray will return nil (0)
     // only setters and getter shoud access the instance variable directly
-    if(!_operandStack) {
-        _operandStack = [[NSMutableArray alloc] init];
+    if(!_programStack) {
+        _programStack = [[NSMutableArray alloc] init];
     }
-    return _operandStack;
+    return _programStack;;
 }
 
 - (void)pushOperand:(double)operand
 {
     NSNumber *operandObject = [NSNumber numberWithDouble:operand];
-    [self.operandStack addObject:operandObject];
+    [self.programStack addObject:operandObject];
 }
 
 - (double)popOperand
 {
-    NSNumber *operandObject = [self.operandStack lastObject];
+    NSNumber *operandObject = [self.programStack lastObject];
     // again operandObject is a pointer to a NSNumber
     // it will be nil and the condition will be false
-    if (operandObject) [self.operandStack removeLastObject];
+    if (operandObject) [self.programStack removeLastObject];
     return [operandObject doubleValue];
 }
 
 - (void)makeEmpty
 {
-    [self.operandStack removeAllObjects];
+    [self.programStack removeAllObjects];
+}
+
++ (NSString *) descriptionOfProgram:(id)program
+{
+    return @"Implement this in Homework #2";
+}
+
++ (double)runProgram:(id)program
+{
+    double result = 0;
+    // take the operands and operators on the stack and
+    // use them
+    return result;
 }
 
 - (double)performOperation:(NSString *)operation
@@ -81,7 +95,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"stack = %@", self.operandStack]; 
+    return [NSString stringWithFormat:@"stack = %@", self.programStack]; 
 }
 
 @end
