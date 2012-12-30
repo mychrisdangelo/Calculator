@@ -14,6 +14,8 @@
 - (double)performOperation:(NSString *)operation;
 - (void)makeEmpty;
 
+@property (nonatomic, readonly) id program;
+
 + (NSString *)descriptionOfProgram:(id)program;
 + (double)runProgram:(id)program;
 
