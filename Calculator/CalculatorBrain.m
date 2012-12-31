@@ -69,12 +69,14 @@
     
     // strings that are not operations must be variable names
     // return nil if none are found
-    NSMutableSet *variablesUsed = nil;
+    NSMutableSet *variablesUsed = [[NSMutableSet alloc] init];
     for (id each in program) {
-        if ([each isMemberOfClass:[NSString class]] && [self isOperation:each])
+        if (![each isKindOfClass:[NSNumber class]] && ![self isOperation:each] && ![self isNoOperandOperator:each]) {
+            // not an operand, not an operator: so it must be a variable
             [variablesUsed addObject:each];
+        }
     }
-    
+
     // return NSMutableSet to return value NSSet should autocast the pointer id
     // i think
     return variablesUsed;
@@ -83,7 +85,7 @@
 /*
  * This is public API which we are keeping for backwards compatibility
  * instead this function now calls the new private function
- * runProgram
+ * runProgram.  assumes that NO variable names are used. otherwise result is undefined
  */
 - (double)performOperation:(NSString *)operation
 {
@@ -119,12 +121,12 @@
     } else if ([self isSingleOperator:topOfStack]) {
         NSString *rhs = [self descriptionOfTopOfStack:stack];
         rhs = [self removeParens:rhs];
-        result = [result stringByAppendingFormat:@"%@(%@)", topOfStack, rhs];
+        result = [NSString stringWithFormat:@"%@(%@)", topOfStack, rhs];
     } else {
         // is multi-operand operation
         NSString *rhs = [self descriptionOfTopOfStack:stack];
         NSString *lhs = [self descriptionOfTopOfStack:stack];
-        result = [result stringByAppendingFormat:@"(%@ %@ %@)", lhs, topOfStack, rhs];
+        result = [NSString stringWithFormat:@"(%@ %@ %@)", lhs, topOfStack, rhs];
         if ([self isHighPrecedence:topOfStack]) result = [self removeParens:result];
     }
 
@@ -219,17 +221,13 @@
     }
     
     // iterate through the stack replacing variable names
-    int i = 0;
-    for (id key in stack) {
-        if ([key isMemberOfClass:[NSString class]]) {
-            NSNumber *value = [variableValues objectForKey:key];
-            if (value)
-                [stack replaceObjectAtIndex:i withObject:value];
-            else
-                [stack replaceObjectAtIndex:i withObject:0];
-            
-        }
-        i++;
+    for(int i = 0; i < stack.count; i++) {
+        id key = stack[i];
+        // if no value is in the dictionary then no value will be replaced and
+        // objectAtIndex:i will remain
+        NSNumber *value = [variableValues objectForKey:key];
+        if (value)
+            [stack replaceObjectAtIndex:i withObject:value];
     }
     
     return [self popOperandOffProgramStack:stack];

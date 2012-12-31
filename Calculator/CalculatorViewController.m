@@ -16,6 +16,7 @@
 @interface CalculatorViewController ()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (strong, nonatomic) NSDictionary *testVariableValues;
 @end
 
 @implementation CalculatorViewController
@@ -24,6 +25,7 @@
 @synthesize displayTape = _displayTape;
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize brain = _brain;
+@synthesize testVariableValues = _testVariableValues;
 
 - (CalculatorBrain *)brain
 {
@@ -69,12 +71,68 @@
     }
 }
 
+- (void)updateAllDisplays
+{
+    double result = [[self.brain class] runProgram:self.brain.program usingVariableValues:self.testVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
+    
+    [self updateDisplayTape];
+    [self updateDisplayVariables];
+}
+
+- (void)updateDisplayTape
+{
+    self.displayTape.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
+}
+
+- (void)updateDisplayVariables
+{
+    NSSet *variablesInProgram = [[self.brain class] variablesUsedInProgram:self.brain.program];
+    NSString *variablesToDisplay = @"";
+    for (NSString *key in variablesInProgram) {
+        variablesToDisplay = [variablesToDisplay stringByAppendingFormat:@"%@ = %@ ", key,
+         [self.testVariableValues objectForKey:key]];
+    }
+    self.displayVariables.text = variablesToDisplay;
+}
+
+
 - (IBAction)enterPressed
 {
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     
-    self.displayTape.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
+    [self updateAllDisplays];
+}
+
+- (IBAction)testValues:(UIButton *)sender
+{
+    NSString *test = [sender currentTitle];
+    if ([test isEqualToString:@"test 1"]) {
+        self.testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithDouble:4.33], @"x",
+                                   [NSNumber numberWithDouble:-44.1], @"y",
+                                   [NSNumber numberWithDouble:99.33], @"z",
+                                   nil];
+    }
+    
+    if ([test isEqualToString:@"test 2"]) {
+        self.testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithDouble:9.33], @"x",
+                                   [NSNumber numberWithDouble:0], @"y",
+                                   [NSNumber numberWithDouble:4.0], @"z",
+                                   nil];
+    }
+    
+    if ([test isEqualToString:@"test 3"]) {
+        self.testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   nil, @"x",
+                                   nil, @"y",
+                                   nil, @"z",
+                                   nil];
+    }
+    
+    [self updateAllDisplays];
 }
 
 - (IBAction)operationPressed:(UIButton *)sender
@@ -86,10 +144,10 @@
     // could use dot notation here because sender is statically typed
     // ie. sender.currentTitle
     NSString *operation = [sender currentTitle];
-    double result = [self.brain performOperation:operation];
-    self.display.text = [NSString stringWithFormat:@"%g", result];
-    
-    self.displayTape.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
+    // performOperation with variables is undefined
+    [self.brain performOperation:operation]; // will be undefined but pushes operator
+
+    [self updateAllDisplays];
 }
 
 @end
