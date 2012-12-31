@@ -13,6 +13,7 @@
 - (void)pushOperand:(double)operand;
 - (double)performOperation:(NSString *)operation;
 - (void)makeEmpty;
+- (id)pop;
 
 @property (nonatomic, readonly) id program;
 

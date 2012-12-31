@@ -73,7 +73,7 @@
 
 - (void)updateAllDisplays
 {
-    double result = [[self.brain class] runProgram:self.brain.program usingVariableValues:self.testVariableValues];
+    double result = [CalculatorBrain runProgram:self.brain.program usingVariableValues:self.testVariableValues];
     self.display.text = [NSString stringWithFormat:@"%g", result];
     
     [self updateDisplayTape];
@@ -87,13 +87,14 @@
 
 - (void)updateDisplayVariables
 {
-    NSSet *variablesInProgram = [[self.brain class] variablesUsedInProgram:self.brain.program];
+    NSSet *variablesInProgram = [CalculatorBrain variablesUsedInProgram:self.brain.program];
     NSString *variablesToDisplay = @"";
     for (NSString *key in variablesInProgram) {
         variablesToDisplay = [variablesToDisplay stringByAppendingFormat:@"%@ = %@ ", key,
          [self.testVariableValues objectForKey:key]];
     }
     self.displayVariables.text = variablesToDisplay;
+    self.userIsInTheMiddleOfEnteringANumber = NO;
 }
 
 
@@ -148,6 +149,16 @@
     [self.brain performOperation:operation]; // will be undefined but pushes operator
 
     [self updateAllDisplays];
+}
+
+- (IBAction)undoPressed {
+    if (self.display.text.length >= 1)
+        self.display.text = [self.display.text substringToIndex:self.display.text.length-1];
+    if (self.display.text.length == 0) {
+        self.userIsInTheMiddleOfEnteringANumber = NO;
+        [self.brain pop];
+        [self updateAllDisplays];
+    }
 }
 
 @end

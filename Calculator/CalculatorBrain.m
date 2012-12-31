@@ -28,6 +28,13 @@
     return _programStack;;
 }
 
+- (id)pop
+{
+    id topOfStack = [self.programStack lastObject];
+    if (topOfStack) [self.programStack removeLastObject];
+    return topOfStack;
+}
+
 //TODO: this should highlight
 // HW instructions: "editing this implementation will be unecessary"
 - (id)program
@@ -79,7 +86,7 @@
 
     // return NSMutableSet to return value NSSet should autocast the pointer id
     // i think
-    return variablesUsed;
+    return variablesUsed ? variablesUsed : nil;
 }
 
 /*
@@ -115,6 +122,7 @@
     
     id topOfStack = [stack lastObject];
     if (topOfStack) [stack removeLastObject];
+    else return nil;
     
     if (![self isOperation:topOfStack]) {
         result = [NSString stringWithString:[topOfStack description]];
