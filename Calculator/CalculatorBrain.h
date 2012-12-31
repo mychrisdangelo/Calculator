@@ -19,4 +19,8 @@
 + (NSString *)descriptionOfProgram:(id)program;
 + (double)runProgram:(id)program;
 
++ (double)runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues;
+// returns all names of the variables used in given program, returns nil otherwise
++ (NSSet *)variablesUsedInProgram:(id)program;
+
 @end

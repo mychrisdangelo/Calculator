@@ -28,6 +28,8 @@
     return _programStack;;
 }
 
+//TODO: this should highlight
+// HW instructions: "editing this implementation will be unecessary"
 - (id)program
 {
     return [self.programStack copy];
@@ -37,6 +39,31 @@
 {
     NSNumber *operandObject = [NSNumber numberWithDouble:operand];
     [self.programStack addObject:operandObject];
+}
+
++ (BOOL) isOperation:(NSString *)operation
+{
+    NSSet *operations = [NSSet setWithObjects:@"+", @"-", @"*", @"/", @"sin", @"cos",
+                         @"tan", @"π", @"sqrt", nil];
+    return [operations containsObject:operation];
+}
+
++ (NSSet *)variablesUsedInProgram:(id)program
+{
+    if (![program isKindOfClass:[NSArray class]])
+        return nil;
+    
+    // strings that are not operations must be variable names
+    // return nil if none are found
+    NSMutableSet *variablesUsed = nil;
+    for (id each in program) {
+        if ([each isMemberOfClass:[NSString class]] && [self isOperation:each])
+            [variablesUsed addObject:each];
+    }
+    
+    // return NSMutableSet to return value NSSet should autocast the pointer id
+    // i think
+    return variablesUsed;
 }
 
 /*
@@ -113,6 +140,30 @@
     if ([program isKindOfClass:[NSArray class]]) {
         stack = [program mutableCopy];
     }
+    return [self popOperandOffProgramStack:stack];
+}
+
++ (double)runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
+{
+    NSMutableArray *stack;
+    if ([program isKindOfClass:[NSArray class]]) {
+        stack = [program mutableCopy];
+    }
+    
+    // iterate through the stack replacing variable names
+    int i = 0;
+    for (id key in stack) {
+        if ([key isMemberOfClass:[NSString class]]) {
+            NSNumber *value = [variableValues objectForKey:key];
+            if (value)
+                [stack replaceObjectAtIndex:i withObject:value];
+            else
+                [stack replaceObjectAtIndex:i withObject:0];
+            
+        }
+        i++;
+    }
+    
     return [self popOperandOffProgramStack:stack];
 }
 
