@@ -41,10 +41,24 @@
     [self.programStack addObject:operandObject];
 }
 
+// if NSNumber is presented to isOperation then it will be converted implicitly to NSString
+// it is obviously an operand and will not pass the test
 + (BOOL) isOperation:(NSString *)operation
 {
     NSSet *operations = [NSSet setWithObjects:@"+", @"-", @"*", @"/", @"sin", @"cos",
-                         @"tan", @"π", @"sqrt", nil];
+                         @"tan", @"sqrt", nil];
+    return [operations containsObject:operation];
+}
+
++ (BOOL) isSingleOperator:(NSString *)operation
+{
+    NSSet *operations = [NSSet setWithObjects:@"sin", @"cos", @"tan", @"sqrt", nil];
+    return [operations containsObject:operation];
+}
+
++ (BOOL) isNoOperandOperator:(NSString *)operation
+{
+    NSSet *operations = [NSSet setWithObjects:@"π", nil];
     return [operations containsObject:operation];
 }
 
@@ -75,6 +89,47 @@
 {
     [self.programStack addObject:operation];
     return [[self class] runProgram:self.program];
+}
+
++ (BOOL)isHighPrecedence:(NSString *)operator
+{
+    NSSet *operators = [NSSet setWithObjects:@"*", @"/", nil];
+    return [operators containsObject:operator];
+}
+
++ (NSString *)removeParens:(NSString *)expression
+{
+    if(expression.length <= 1 || !([expression characterAtIndex:0] == '(' &&
+       [expression characterAtIndex:expression.length-1] == ')'))
+        return expression;
+    
+    NSRange range = NSMakeRange(1, expression.length-2);
+    return [expression substringWithRange:range];
+}
+
++ (NSString *)descriptionOfTopOfStack:(NSMutableArray *)stack
+{
+    NSString *result = @"";
+    
+    id topOfStack = [stack lastObject];
+    if (topOfStack) [stack removeLastObject];
+    
+    if (![self isOperation:topOfStack]) {
+        result = [NSString stringWithString:[topOfStack description]];
+    } else if ([self isSingleOperator:topOfStack]) {
+        NSString *rhs = [self descriptionOfTopOfStack:stack];
+        rhs = [self removeParens:rhs];
+        result = [result stringByAppendingFormat:@"%@(%@)", topOfStack, rhs];
+    } else {
+        // is multi-operand operation
+        NSString *rhs = [self descriptionOfTopOfStack:stack];
+        NSString *lhs = [self descriptionOfTopOfStack:stack];
+        result = [result stringByAppendingFormat:@"(%@ %@ %@)", lhs, topOfStack, rhs];
+        if ([self isHighPrecedence:topOfStack]) result = [self removeParens:result];
+    }
+
+    // NSLog(@"returning from result: %@", result);
+    return result;
 }
 
 + (double)popOperandOffProgramStack:(NSMutableArray *)stack
@@ -124,7 +179,20 @@
 
 + (NSString *) descriptionOfProgram:(id)program
 {
-    return @"Implement this in Homework #2";
+    NSMutableArray *stack;
+    if ([program isKindOfClass:[NSArray class]]) {
+        stack = [program mutableCopy];
+    }
+    
+    NSString *result = [self descriptionOfTopOfStack:stack];
+    result = [self removeParens:result];
+    // NSLog(@"stack count %@", stack.count);
+    while (stack.count) {
+        NSString *rhs = [self descriptionOfTopOfStack:stack];
+        rhs = [self removeParens:rhs];
+        result = [result stringByAppendingFormat:@", %@", rhs];
+    }
+    return result;
 }
 
 /*

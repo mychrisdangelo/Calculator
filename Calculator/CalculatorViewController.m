@@ -74,8 +74,7 @@
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     
-    self.displayTape.text = [NSString stringWithFormat:@"%@ ",
-                             [self.displayTape.text stringByAppendingString:self.display.text] ];
+    self.displayTape.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
 }
 
 - (IBAction)operationPressed:(UIButton *)sender
@@ -90,8 +89,7 @@
     double result = [self.brain performOperation:operation];
     self.display.text = [NSString stringWithFormat:@"%g", result];
     
-    self.displayTape.text = [NSString stringWithFormat:@"%@ ",
-                             [self.displayTape.text stringByAppendingString:operation]];
+    self.displayTape.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
 }
 
 @end
