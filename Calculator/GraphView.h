@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class GraphView; // forward declaration
+
+@protocol GraphViewDataSource
+- (float)yValue:(float)xValue sender:(GraphView *)sender;
+@end;
+
 @interface GraphView : UIView
+
+@property (nonatomic, weak) id <GraphViewDataSource> dataSource; // ok for weak ptr, held strong by implementor of protocol
 
 @end

@@ -18,6 +18,7 @@
 
 @synthesize scale = _scale;
 @synthesize origin = _origin;
+@synthesize dataSource = _dataSource;
 
 #define DEFAULT_SCALE 10
 

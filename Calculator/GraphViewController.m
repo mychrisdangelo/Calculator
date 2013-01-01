@@ -11,7 +11,7 @@
 #import "CalculatorBrain.h"
 
 
-@interface GraphViewController ()
+@interface GraphViewController () <GraphViewDataSource>
 // We can hold onto this pointer strongly.  We will drop it when controller dies
 @property (strong, nonatomic) IBOutlet GraphView *graphView;
 
@@ -22,6 +22,11 @@
 @synthesize programStack = _programStack;
 @synthesize graphView = _graphView;
 
+- (float)yValue:(float)xValue sender:(GraphView *)sender
+{
+    return [CalculatorBrain runProgram:self.programStack usingVariableValues:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:xValue], @"x", nil]];
+}
+
 - (void)setGraphView:(GraphView *)graphView
 {
     _graphView = graphView;
@@ -30,6 +35,7 @@
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(tap:)];
     tapRecognizer.numberOfTapsRequired = 3;
     [self.graphView addGestureRecognizer:tapRecognizer];
+    self.graphView.dataSource = self;
 }
 
 // when the formula is updated refresh screen

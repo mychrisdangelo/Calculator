@@ -11,6 +11,6 @@
 
 @interface GraphViewController : UIViewController
 
-@property (nonatomic, weak) NSArray *programStack;
+@property (nonatomic, strong) NSArray *programStack; // this pointer must be held when we jump to view
 
 @end
