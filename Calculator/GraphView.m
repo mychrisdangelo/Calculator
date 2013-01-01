@@ -87,4 +87,11 @@
     }
 }
 
+- (void)tap:(UITapGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        self.origin = [gesture locationInView:self];
+    }
+}
+
 @end
