@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40266AC41692A58800718148 /* RotatableNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40266AC31692A58800718148 /* RotatableNavigationControllerViewController.m */; };
 		404B9BC7168EC34700B6A871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404B9BC6168EC34700B6A871 /* UIKit.framework */; };
 		404B9BC9168EC34700B6A871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404B9BC8168EC34700B6A871 /* Foundation.framework */; };
 		404B9BCB168EC34700B6A871 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404B9BCA168EC34700B6A871 /* CoreGraphics.framework */; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40266AC21692A58800718148 /* RotatableNavigationControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatableNavigationControllerViewController.h; sourceTree = "<group>"; };
+		40266AC31692A58800718148 /* RotatableNavigationControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatableNavigationControllerViewController.m; sourceTree = "<group>"; };
 		404B9BC2168EC34700B6A871 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		404B9BC6168EC34700B6A871 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		404B9BC8168EC34700B6A871 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -96,6 +99,8 @@
 		404B9BCC168EC34700B6A871 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				40266AC21692A58800718148 /* RotatableNavigationControllerViewController.h */,
+				40266AC31692A58800718148 /* RotatableNavigationControllerViewController.m */,
 				40619B3316927B5900005343 /* AxesDrawer.h */,
 				40619B3416927B5900005343 /* AxesDrawer.m */,
 				404B9BE9168F443800B6A871 /* CalculatorBrain.h */,
@@ -203,6 +208,7 @@
 				404B9BEB168F443800B6A871 /* CalculatorBrain.m in Sources */,
 				40619B3816927BB800005343 /* GraphViewController.m in Sources */,
 				40619B3B16927BEF00005343 /* GraphView.m in Sources */,
+				40266AC41692A58800718148 /* RotatableNavigationControllerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 // this is where private functions can go
 // these functions are not accessible outside of this file but they are still classified
@@ -159,6 +160,18 @@
         [self.brain pop];
         [self updateAllDisplays];
     }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"ShowGraph"]) {
+        [segue.destinationViewController setProgramStack:self.brain.program];
+    }
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
 }
 
 @end

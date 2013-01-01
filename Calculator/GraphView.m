@@ -15,6 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        // self.contentMode = UIViewContentModeRedraw has been set in Interface Builder for iPhone
     }
     return self;
 }

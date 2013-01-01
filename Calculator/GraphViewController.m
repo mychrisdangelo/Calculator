@@ -7,7 +7,9 @@
 //
 
 #import "GraphViewController.h"
-#import "GraphView.h" 
+#import "GraphView.h"
+#import "CalculatorBrain.h"
+
 
 @interface GraphViewController ()
 // We can hold onto this pointer strongly.  We will drop it when controller dies
@@ -24,6 +26,7 @@
 - (void)setProgramStack:(NSArray *)programStack
 {
     _programStack = programStack;
+    self.title = [CalculatorBrain descriptionOfProgram:self.programStack];
     [self.graphView setNeedsDisplay];
 }
 
@@ -46,6 +49,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
 }
 
 @end
