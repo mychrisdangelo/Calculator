@@ -35,9 +35,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+// thanks to http://www.roostersoftstudios.com/2012/09/21/ios6-autorotation-changes/ for this code
 - (BOOL)shouldAutorotate
 {
     return self.topViewController.shouldAutorotate; //you are asking your current controller what it should do
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return self.topViewController.supportedInterfaceOrientations;
 }
 
 @end

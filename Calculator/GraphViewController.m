@@ -31,7 +31,7 @@
 // when the formula is updated refresh screen
 - (void)setProgramStack:(NSArray *)programStack
 {
-    _programStack = programStack;
+    _programStack != programStack;
     self.title = [CalculatorBrain descriptionOfProgram:self.programStack];
     [self.graphView setNeedsDisplay];
 }
