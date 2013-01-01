@@ -11,16 +11,19 @@
 #import "CalculatorBrain.h"
 
 
-@interface GraphViewController () <GraphViewDataSource>
+@interface GraphViewController () <GraphViewDataSource, UISplitViewControllerDelegate>
 // We can hold onto this pointer strongly.  We will drop it when controller dies
 @property (strong, nonatomic) IBOutlet GraphView *graphView;
-
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) UIBarButtonItem *splitViewBarButtonItem;
 @end
 
 @implementation GraphViewController
 
 @synthesize programStack = _programStack;
 @synthesize graphView = _graphView;
+@synthesize toolbar = _toolbar;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 
 - (float)yValue:(float)xValue sender:(GraphView *)sender
 {
@@ -58,7 +61,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    // required by UISplitViewControllerDelegate.  Now UISpliveViewController will look to this controller for implemented functions
+    self.splitViewController.delegate = self;
+}
+
+/* 
+ * handler setting/removing barButton Item
+ * make copy of toolbar first
+ * if the splitViewBarButtonItem is currently showing remove it from the toolbar
+ * if the barButtonItem passed is in is valid that is the barItem we want to display
+ * set the toolbar with that item
+ * store the barButtonItem we used for reference later
+ * 
+ * if user passes in nil then
+ * the bar button item in the toolbar will be removed and nothing will be added
+ * we will store in splitViewBarButtonItem nil to show that nothing is there.
+ */
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+    if (_splitViewBarButtonItem) [toolbarItems removeObject:_splitViewBarButtonItem];
+    if (barButtonItem) [toolbarItems insertObject:barButtonItem atIndex:0];
+    self.toolbar.items = toolbarItems;
+    _splitViewBarButtonItem = barButtonItem;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
+{
+    barButtonItem.title = @"Calculator";
+    [self setSplitViewBarButtonItem:barButtonItem];
+}
+
+- (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    [self setSplitViewBarButtonItem:nil];
+}
+
+// this delegate method exists by default. I've included for clarity
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+    return UIInterfaceOrientationIsPortrait(orientation);
 }
 
 - (void)didReceiveMemoryWarning

@@ -7,7 +7,6 @@
         <!--Navigation Controller-->
         <scene sceneID="RbO-l7-PLm">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2gC-30-Zne" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="Ze2-ft-3I0" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BoF-xO-o3E">
                         <autoresizingMask key="autoresizingMask"/>
@@ -16,6 +15,7 @@
                         <segue destination="Q4K-bm-dL8" kind="relationship" relationship="rootViewController" id="mjP-ZP-6RW"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2gC-30-Zne" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-456" y="420"/>
         </scene>
@@ -36,7 +36,6 @@
         <!--Calculator View Controller - Calculator-->
         <scene sceneID="4cU-ok-f2U">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="B7f-AK-QQ9" sceneMemberID="firstResponder"/>
                 <viewController id="Q4K-bm-dL8" customClass="CalculatorViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ECR-Nt-ScQ">
                         <rect key="frame" x="0.0" y="64" width="320" height="788"/>
@@ -453,6 +452,7 @@
                         <outlet property="displayTape" destination="Wu3-5d-Xrj" id="bh0-yH-hN3"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B7f-AK-QQ9" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="68" y="408"/>
         </scene>
@@ -486,6 +486,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <connections>
                         <outlet property="graphView" destination="DE3-Yx-4JA" id="L4x-Uv-qUt"/>
+                        <outlet property="toolbar" destination="aQI-hH-3eR" id="4MG-cm-Ybp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mu7-9T-Bbb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -493,33 +494,6 @@
             <point key="canvasLocation" x="-403" y="1544"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CalculatorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="decimalPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="testValues:" candidateClass="UIButton"/>
-                <relationship kind="action" name="updateGraph:"/>
-                <relationship kind="outlet" name="display" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="displayTape" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="displayVariables" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="GraphView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
-        </class>
-        <class className="GraphViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="graphView" candidateClass="GraphView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

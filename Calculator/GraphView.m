@@ -71,7 +71,7 @@
     float xValue, yValue;
     int yPixel;
     int pointSize = self.contentScaleFactor;
-    for (int xPixel = self.bounds.origin.x; xPixel < self.bounds.size.width; xPixel+=pointSize) {
+    for (int xPixel = self.bounds.origin.x-1; xPixel < self.bounds.size.width; xPixel+=pointSize) {
         xValue = - ((self.origin.x - xPixel) / self.scale);
         yValue = [self.dataSource yValue:xValue sender:self];
         yPixel = self.origin.y - (yValue * self.scale);

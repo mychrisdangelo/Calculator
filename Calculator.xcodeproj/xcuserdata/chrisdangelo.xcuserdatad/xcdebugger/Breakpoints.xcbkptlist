@@ -8,7 +8,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Calculator/CalculatorViewController.m"
-         timestampString = "378705940.651696"
+         timestampString = "378761933.44441"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "93"
@@ -47,13 +47,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Calculator/GraphViewController.m"
-         timestampString = "378719624.504422"
+         timestampString = "378763140.406984"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "27"
-         endingLineNumber = "27"
+         startingLineNumber = "30"
+         endingLineNumber = "30"
          landmarkName = "-yValue:sender:"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Calculator/GraphViewController.m"
+         timestampString = "378763062.494359"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
+         landmarkName = "splitViewBarButtonItem"
+         landmarkType = "19">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>
