@@ -26,12 +26,13 @@
 {
     _graphView = graphView;
     [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
+    [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pan:)]];
 }
 
 // when the formula is updated refresh screen
 - (void)setProgramStack:(NSArray *)programStack
 {
-    _programStack != programStack;
+    _programStack = programStack;
     self.title = [CalculatorBrain descriptionOfProgram:self.programStack];
     [self.graphView setNeedsDisplay];
 }

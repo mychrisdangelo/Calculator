@@ -11,13 +11,15 @@
 
 @interface GraphView()
 @property (nonatomic) CGFloat scale;
+@property (nonatomic) CGPoint origin;
 @end
 
 @implementation GraphView
 
 @synthesize scale = _scale;
+@synthesize origin = _origin;
 
-#define DEFAULT_SCALE 1
+#define DEFAULT_SCALE 10
 
 - (CGFloat)scale
 {
@@ -25,11 +27,25 @@
     else return _scale;
 }
 
+- (CGPoint)origin
+{
+    if (!(_origin.x && _origin.y)) return CGPointMake(self.bounds.origin.x + self.bounds.size.width/2, self.bounds.origin.y + self.bounds.size.height/2);
+    else return _origin;
+}
+
 - (void)setScale:(CGFloat)scale
 {
     if (scale != _scale) {
         _scale = scale;
         [self setNeedsDisplay]; // call whenever scale changes
+    }
+}
+
+- (void)setOrigin:(CGPoint)origin
+{
+    if (origin.x != _origin.x && origin.y != _origin.y) {
+        _origin = origin;
+        [self setNeedsDisplay]; // call whenever origin changes
     }
 }
 
@@ -46,10 +62,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGPoint midPoint;
-    midPoint.x = self.bounds.origin.x + self.bounds.size.width/2;
-    midPoint.y = self.bounds.origin.y + self.bounds.size.height/2;
-    [AxesDrawer drawAxesInRect:self.bounds originAtPoint:midPoint scale:self.scale];
+    [AxesDrawer drawAxesInRect:self.bounds originAtPoint:self.origin scale:self.scale];
     // calc left x value
     // calc right x value
     // draw poitns in between
@@ -64,5 +77,14 @@
     }
 }
 
+- (void)pan:(UIPanGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        CGPoint translation = [gesture translationInView:self];
+        self.origin = CGPointMake(self.origin.x+translation.x, self.origin.y+translation.y);
+        [gesture setTranslation:CGPointZero inView:self];
+    }
+}
 
 @end
