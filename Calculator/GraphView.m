@@ -7,6 +7,7 @@
 //
 
 #import "GraphView.h"
+#import "AxesDrawer.h"
 
 @implementation GraphView
 
@@ -20,13 +21,22 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    
+#define SCALE 10.0
+    
+    CGPoint midPoint;
+    midPoint.x = self.bounds.origin.x + self.bounds.size.width/2;
+    midPoint.y = self.bounds.origin.y + self.bounds.size.height/2;
+    [AxesDrawer drawAxesInRect:self.bounds originAtPoint:midPoint scale:SCALE];
+    
+    // calc left x value
+    
+    // calc right x value
+    // draw poitns in between
 }
-*/
+
 
 @end

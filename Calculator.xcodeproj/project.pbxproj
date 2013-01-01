@@ -23,6 +23,7 @@
 		40619B3816927BB800005343 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40619B3716927BB800005343 /* GraphViewController.m */; };
 		40619B3B16927BEF00005343 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40619B3A16927BEF00005343 /* GraphView.m */; };
 		40619B3D16927CD200005343 /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40619B3C16927CD200005343 /* iPad.storyboard */; };
+		406CC0FE1692AAA700EA3D09 /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40619B3416927B5900005343 /* AxesDrawer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -209,6 +210,7 @@
 				40619B3816927BB800005343 /* GraphViewController.m in Sources */,
 				40619B3B16927BEF00005343 /* GraphView.m in Sources */,
 				40266AC41692A58800718148 /* RotatableNavigationControllerViewController.m in Sources */,
+				406CC0FE1692AAA700EA3D09 /* AxesDrawer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
