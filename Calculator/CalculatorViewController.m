@@ -169,6 +169,20 @@
     }
 }
 
+- (GraphViewController *)splitViewGraphViewController
+{
+    id gvc = [self.splitViewController.viewControllers lastObject];
+    if (![gvc isKindOfClass:[GraphViewController class]]) {
+        gvc = nil;
+    }
+    return gvc;
+}
+
+- (IBAction)updateGraph:(id)sender
+{
+    [[self splitViewGraphViewController] setProgramStack:self.brain.program];
+}
+
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;

@@ -20,7 +20,6 @@
 @synthesize origin = _origin;
 @synthesize dataSource = _dataSource;
 
-// TODO: make default scale intelligently find the closest x or y coordinate to scale to
 #define DEFAULT_SCALE 10
 
 - (CGFloat)scale
