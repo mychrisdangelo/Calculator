@@ -9,7 +9,29 @@
 #import "GraphView.h"
 #import "AxesDrawer.h"
 
+@interface GraphView()
+@property (nonatomic) CGFloat scale;
+@end
+
 @implementation GraphView
+
+@synthesize scale = _scale;
+
+#define DEFAULT_SCALE 1
+
+- (CGFloat)scale
+{
+    if (!_scale) return DEFAULT_SCALE;
+    else return _scale;
+}
+
+- (void)setScale:(CGFloat)scale
+{
+    if (scale != _scale) {
+        _scale = scale;
+        [self setNeedsDisplay]; // call whenever scale changes
+    }
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -24,18 +46,22 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    
-#define SCALE 10.0
-    
     CGPoint midPoint;
     midPoint.x = self.bounds.origin.x + self.bounds.size.width/2;
     midPoint.y = self.bounds.origin.y + self.bounds.size.height/2;
-    [AxesDrawer drawAxesInRect:self.bounds originAtPoint:midPoint scale:SCALE];
-    
+    [AxesDrawer drawAxesInRect:self.bounds originAtPoint:midPoint scale:self.scale];
     // calc left x value
-    
     // calc right x value
     // draw poitns in between
+}
+
+- (void)pinch:(UIPinchGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        self.scale *=gesture.scale;
+        gesture.scale = 1;
+    }
 }
 
 

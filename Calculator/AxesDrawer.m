@@ -50,6 +50,7 @@
 {
 	if (!pointsPerUnit) return;
 
+    // if axisOrigin is outside of bounds
 	if (((axisOrigin.x < bounds.origin.x) || (axisOrigin.x > bounds.origin.x+bounds.size.width)) &&
 		((axisOrigin.y < bounds.origin.y) || (axisOrigin.y > bounds.origin.y+bounds.size.height))) {
 		return;

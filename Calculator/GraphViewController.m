@@ -22,6 +22,12 @@
 @synthesize programStack = _programStack;
 @synthesize graphView = _graphView;
 
+- (void)setGraphView:(GraphView *)graphView
+{
+    _graphView = graphView;
+    [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
+}
+
 // when the formula is updated refresh screen
 - (void)setProgramStack:(NSArray *)programStack
 {
