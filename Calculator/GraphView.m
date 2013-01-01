@@ -20,6 +20,7 @@
 @synthesize origin = _origin;
 @synthesize dataSource = _dataSource;
 
+// TODO: make default scale intelligently find the closest x or y coordinate to scale to
 #define DEFAULT_SCALE 10
 
 - (CGFloat)scale
@@ -60,13 +61,34 @@
     return self;
 }
 
+- (void)drawGraph
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 1.0);
+    [[UIColor blueColor] setStroke];
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, -1, -1);
+    
+    float xValue, yValue;
+    int yPixel;
+    int pointSize = self.contentScaleFactor;
+    for (int xPixel = self.bounds.origin.x; xPixel < self.bounds.size.width; xPixel+=pointSize) {
+        xValue = - ((self.origin.x - xPixel) / self.scale);
+        yValue = [self.dataSource yValue:xValue sender:self];
+        yPixel = self.origin.y - (yValue * self.scale);
+        CGContextAddLineToPoint(context, xPixel, yPixel);
+        // NSLog(@"Value (%f, %f)", xValue, yValue);
+        // NSLog(@"Pixel (%d, %d)", xPixel, yPixel);
+        
+    }
+    CGContextStrokePath(context);
+}
+
 
 - (void)drawRect:(CGRect)rect
 {
     [AxesDrawer drawAxesInRect:self.bounds originAtPoint:self.origin scale:self.scale];
-    // calc left x value
-    // calc right x value
-    // draw poitns in between
+    [self drawGraph];
 }
 
 - (void)pinch:(UIPinchGestureRecognizer *)gesture
