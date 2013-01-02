@@ -92,7 +92,7 @@
     if ((gesture.state == UIGestureRecognizerStateChanged) ||
         (gesture.state == UIGestureRecognizerStateEnded)) {
         self.scale *=gesture.scale;
-        gesture.scale = 1;
+        gesture.scale = 1; // reset so result is not cumulative
     }
 }
 
@@ -102,7 +102,7 @@
         (gesture.state == UIGestureRecognizerStateEnded)) {
         CGPoint translation = [gesture translationInView:self];
         self.origin = CGPointMake(self.origin.x+translation.x, self.origin.y+translation.y);
-        [gesture setTranslation:CGPointZero inView:self];
+        [gesture setTranslation:CGPointZero inView:self]; // reset so result is not cumulative
     }
 }
 
