@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarTitle;
 @property (weak, nonatomic) UIBarButtonItem *splitViewBarButtonItem;
+@property (nonatomic, weak) UIPopoverController *popoverController;
 @end
 
 @implementation GraphViewController
@@ -26,6 +27,7 @@
 @synthesize graphView = _graphView;
 @synthesize toolbar = _toolbar;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+@synthesize popoverController; // method used in CS193P
 
 - (float)yValue:(float)xValue sender:(GraphView *)sender
 {
@@ -142,22 +144,37 @@
     NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
     if(!favorites) favorites = [NSMutableArray array];
     [favorites addObject:self.programStack];
+#warning if user enters nil graph as favorite program crashes
     [defaults setObject:favorites forKey:FAVORITES_KEY];
     [defaults synchronize];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    /*
+     * if popOver segue handle differently: after confiming it is a popOver segue
+     * delete the currentPopover if any
+     * keep track of the popover we are going to use
+     */
     if([segue.identifier isEqualToString:@"Show Favorites"]) {
+        if([segue isKindOfClass:[UIStoryboardPopoverSegue class]]) {
+            UIStoryboardPopoverSegue *popoverSegue = (UIStoryboardPopoverSegue *)segue;
+            [self.popoverController dismissPopoverAnimated:NO];
+            self.popoverController = popoverSegue.popoverController;
+        }
+        
         NSArray *programs = [[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY];
         [segue.destinationViewController setPrograms:programs]; // can't use . notation here
         [segue.destinationViewController setDelegate:self];
     }
 }
 
+// first set the program. If we are a popOver dismiss it. If we are in a navigationController (iPhone) then pop the view
 - (void)favoritesTableViewController:(FavoritesTableViewController *)sender choseProgram:(id)program
 {
     [self setProgramStack:program];
+    [self.popoverController dismissPopoverAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
