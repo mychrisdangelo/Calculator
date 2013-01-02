@@ -35,7 +35,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-// thanks to http://www.roostersoftstudios.com/2012/09/21/ios6-autorotation-changes/ for this code
+// thanks to http://www.roostersoftstudios.com/2012/09/21/ios6-autorotation-changes/ for this code.  These methods are new to iOS6
 - (BOOL)shouldAutorotate
 {
     return self.topViewController.shouldAutorotate; //you are asking your current controller what it should do

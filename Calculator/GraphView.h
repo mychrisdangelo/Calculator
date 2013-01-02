@@ -16,6 +16,9 @@
 
 @interface GraphView : UIView
 
+@property (nonatomic) CGFloat scale;
+@property (nonatomic) CGPoint origin;
+
 @property (nonatomic, weak) id <GraphViewDataSource> dataSource; // ok for weak ptr, held strong by implementor of protocol
 
 @end

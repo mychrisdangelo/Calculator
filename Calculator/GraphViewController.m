@@ -30,6 +30,14 @@
     return [CalculatorBrain runProgram:self.programStack usingVariableValues:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:xValue], @"x", nil]];
 }
 
+- (void)setOriginAndScaleFromPresets
+{
+    NSDictionary *presets = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"presets"];
+    self.graphView.scale = [[presets objectForKey:@"scale"] floatValue];
+    self.graphView.origin = CGPointMake([[presets objectForKey:@"origin.x"] floatValue], [[presets objectForKey:@"origin.y"] floatValue]);
+    NSLog(@"setting origin and scale from presets");
+}
+
 - (void)setGraphView:(GraphView *)graphView
 {
     _graphView = graphView;
@@ -39,6 +47,7 @@
     tapRecognizer.numberOfTapsRequired = 3;
     [self.graphView addGestureRecognizer:tapRecognizer];
     self.graphView.dataSource = self;
+    [self setOriginAndScaleFromPresets];
 }
 
 // when the formula is updated refresh screen
@@ -63,6 +72,14 @@
     [super viewDidLoad];
     // required by UISplitViewControllerDelegate.  Now UISpliveViewController will look to this controller for implemented functions
     self.splitViewController.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSDictionary *presets = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithFloat:self.graphView.origin.x], @"origin.x", [NSNumber numberWithFloat:self.graphView.origin.y], @"origin.y", [NSNumber numberWithFloat:self.graphView.scale], @"scale", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:presets forKey:@"presets"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"STORING origin and scale to presets");
 }
 
 /* 

@@ -9,10 +9,7 @@
 #import "GraphView.h"
 #import "AxesDrawer.h"
 
-@interface GraphView()
-@property (nonatomic) CGFloat scale;
-@property (nonatomic) CGPoint origin;
-@end
+
 
 @implementation GraphView
 
