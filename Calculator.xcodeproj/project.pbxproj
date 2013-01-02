@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4016FF4F16940A0400073DDF /* FavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4016FF4E16940A0400073DDF /* FavoritesTableViewController.m */; };
 		40266AC41692A58800718148 /* RotatableNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40266AC31692A58800718148 /* RotatableNavigationControllerViewController.m */; };
 		404B9BC7168EC34700B6A871 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404B9BC6168EC34700B6A871 /* UIKit.framework */; };
 		404B9BC9168EC34700B6A871 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404B9BC8168EC34700B6A871 /* Foundation.framework */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4016FF4D16940A0400073DDF /* FavoritesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesTableViewController.h; sourceTree = "<group>"; };
+		4016FF4E16940A0400073DDF /* FavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesTableViewController.m; sourceTree = "<group>"; };
 		40266AC21692A58800718148 /* RotatableNavigationControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotatableNavigationControllerViewController.h; sourceTree = "<group>"; };
 		40266AC31692A58800718148 /* RotatableNavigationControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatableNavigationControllerViewController.m; sourceTree = "<group>"; };
 		404B9BC2168EC34700B6A871 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +117,8 @@
 				404B9BD6168EC34700B6A871 /* CalculatorAppDelegate.m */,
 				404B9BDE168EC34700B6A871 /* iPhone.storyboard */,
 				40619B3C16927CD200005343 /* iPad.storyboard */,
+				4016FF4D16940A0400073DDF /* FavoritesTableViewController.h */,
+				4016FF4E16940A0400073DDF /* FavoritesTableViewController.m */,
 				404B9BE1168EC34700B6A871 /* CalculatorViewController.h */,
 				404B9BE2168EC34700B6A871 /* CalculatorViewController.m */,
 				404B9BCD168EC34700B6A871 /* Supporting Files */,
@@ -211,6 +216,7 @@
 				40619B3B16927BEF00005343 /* GraphView.m in Sources */,
 				40266AC41692A58800718148 /* RotatableNavigationControllerViewController.m in Sources */,
 				406CC0FE1692AAA700EA3D09 /* AxesDrawer.m in Sources */,
+				4016FF4F16940A0400073DDF /* FavoritesTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,7 @@
 - (void)makeEmpty;
 - (id)pop;
 
+// program guaranteed to be a Property List
 @property (nonatomic, readonly) id program;
 
 + (NSString *)descriptionOfProgram:(id)program;

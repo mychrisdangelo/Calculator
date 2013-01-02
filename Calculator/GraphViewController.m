@@ -9,9 +9,10 @@
 #import "GraphViewController.h"
 #import "GraphView.h"
 #import "CalculatorBrain.h"
+#import "FavoritesTableViewController.h"
 
 
-@interface GraphViewController () <GraphViewDataSource, UISplitViewControllerDelegate>
+@interface GraphViewController () <GraphViewDataSource, UISplitViewControllerDelegate, FavoritesTableViewControllerDelegate>
 // We can hold onto this pointer strongly.  We will drop it when controller dies
 @property (strong, nonatomic) IBOutlet GraphView *graphView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -31,12 +32,12 @@
     return [CalculatorBrain runProgram:self.programStack usingVariableValues:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:xValue], @"x", nil]];
 }
 
+#define PRESETS_KEY @"GraphViewController.presets"
 - (void)setOriginAndScaleFromPresets
 {
-    NSDictionary *presets = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"presets"];
+    NSDictionary *presets = [[NSUserDefaults standardUserDefaults] dictionaryForKey:PRESETS_KEY];
     self.graphView.scale = [[presets objectForKey:@"scale"] floatValue];
     self.graphView.origin = CGPointMake([[presets objectForKey:@"origin.x"] floatValue], [[presets objectForKey:@"origin.y"] floatValue]);
-    NSLog(@"setting origin and scale from presets");
 }
 
 - (void)setGraphView:(GraphView *)graphView
@@ -77,10 +78,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated]; // must call
+    
     NSDictionary *presets = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithFloat:self.graphView.origin.x], @"origin.x", [NSNumber numberWithFloat:self.graphView.origin.y], @"origin.y", [NSNumber numberWithFloat:self.graphView.scale], @"scale", nil];
-    [[NSUserDefaults standardUserDefaults] setObject:presets forKey:@"presets"];
+    [[NSUserDefaults standardUserDefaults] setObject:presets forKey:PRESETS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    NSLog(@"STORING origin and scale to presets");
 }
 
 /* 
@@ -130,6 +132,32 @@
 - (BOOL)shouldAutorotate
 {
     return YES;
+}
+
+#define FAVORITES_KEY @"GraphViewController.favorites"
+
+- (IBAction)addToFavorites:(id)sender
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
+    if(!favorites) favorites = [NSMutableArray array];
+    [favorites addObject:self.programStack];
+    [defaults setObject:favorites forKey:FAVORITES_KEY];
+    [defaults synchronize];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"Show Favorites"]) {
+        NSArray *programs = [[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY];
+        [segue.destinationViewController setPrograms:programs]; // can't use . notation here
+        [segue.destinationViewController setDelegate:self];
+    }
+}
+
+- (void)favoritesTableViewController:(FavoritesTableViewController *)sender choseProgram:(id)program
+{
+    [self setProgramStack:program];
 }
 
 @end
