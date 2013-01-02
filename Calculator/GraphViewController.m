@@ -15,6 +15,7 @@
 // We can hold onto this pointer strongly.  We will drop it when controller dies
 @property (strong, nonatomic) IBOutlet GraphView *graphView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarTitle;
 @property (weak, nonatomic) UIBarButtonItem *splitViewBarButtonItem;
 @end
 
@@ -54,7 +55,7 @@
 - (void)setProgramStack:(NSArray *)programStack
 {
     _programStack = programStack;
-    self.title = [CalculatorBrain descriptionOfProgram:self.programStack];
+    self.title = self.toolbarTitle.title = [CalculatorBrain descriptionOfProgram:self.programStack];
     [self.graphView setNeedsDisplay];
 }
 
